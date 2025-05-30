@@ -287,7 +287,9 @@ export default function DashboardPage() {
             </div>
 
             {/* Description with RichTextEditor */}
-            <div className="space-y-1">
+            <div className="space-y-1" 
+            style={{ color: colors.text.primary }}
+            >
               <Label style={{ color: colors.text.secondary }}>Description</Label>
               <RichTextEditor
                 value={newProduct.description}

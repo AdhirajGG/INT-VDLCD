@@ -593,6 +593,7 @@ export default function ProductDetailPage() {
           {/* Formatted HTML Description */}
           <div 
             className="prose prose-invert max-w-none" 
+            style={{ color: colors.text.primary }}
             dangerouslySetInnerHTML={{ __html: machine.description }} 
           />
 
@@ -676,7 +677,9 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Rich Text Editor for Description */}
-              <div className="col-span-full">
+              <div className="col-span-full"
+              style={{ color: colors.text.primary }}
+              >
                 <Label>Description</Label>
                 <RichTextEditor
                   value={editData.description}
