@@ -10,14 +10,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const updateActivity = async () => {
-      if (user) {
-        await axios.patch(`/api/users/${user.id}/activity`);
+      if (user?.id) {
+        try {
+          // Use clerkId instead of Prisma ID
+          await axios.patch(`/api/users/${user.id}/activity`);
+        } catch (error) {
+          console.error("Failed to update activity", error);
+        }
       }
     };
     
-    // Update on mount and every 1 minutes
     updateActivity();
     const interval = setInterval(updateActivity, 1 * 60 * 1000);
+    
     return () => clearInterval(interval);
   }, [user]);
 

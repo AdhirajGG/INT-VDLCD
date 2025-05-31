@@ -4,13 +4,25 @@ import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/clerkAdmin";
 
 // GET all categories
+// export async function GET() {
+//   try {
+//     const categories = await prisma.category.findMany();
+//     return NextResponse.json(categories, { status: 200 });
+//   } catch (error) {
+//     console.error("[CATEGORIES_GET]", error);
+//     return NextResponse.json({ error: "Failed to fetch categories" }, { status: 500 });
+//   }
+// }
+
 export async function GET() {
   try {
     const categories = await prisma.category.findMany();
-    return NextResponse.json(categories, { status: 200 });
+    return NextResponse.json(categories);
   } catch (error) {
-    console.error("[CATEGORIES_GET]", error);
-    return NextResponse.json({ error: "Failed to fetch categories" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch categories" },
+      { status: 500 }
+    );
   }
 }
 

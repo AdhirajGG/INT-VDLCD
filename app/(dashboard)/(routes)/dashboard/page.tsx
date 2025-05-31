@@ -71,8 +71,7 @@ export default function DashboardPage() {
     videoUrl: "", // Add this
   });
 
-  // Analytics state
-  const [totalSales, setTotalSales] = useState(0);
+ 
   const [activeUsers, setActiveUsers] = useState(0);
 
 

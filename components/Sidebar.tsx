@@ -9,8 +9,11 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useMachines } from "@/components/machine";
 import {
+  BookAIcon,
+  BookOpen,
   ChevronDown,
   ChevronUp,
+  Home,
   LayoutDashboard,
   ListOrdered,
   Settings,
@@ -18,12 +21,67 @@ import {
   VideoIcon,
   Warehouse,
 } from "lucide-react";
+import { useUser } from "@clerk/nextjs"; // Add this
 
-export default function Sidebar() { 
+export default function Sidebar() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const { categories, refreshCategories } = useMachines();
+ const { user } = useUser(); // Get user
+
+  // // Pull your category names out for the Products sub‑menu
+  // const productSubRoutes = categories.map((c) => ({
+  //   label: c.name,
+  //   href: `/products/category/${c.name.toLowerCase().replace(/\s+/g, "-")}`,
+  // }));
+
+  // // Single source of truth for your menu
+  // const routes = [
+
+  //   {
+  //     label: "Home",
+  //     icon: Home,
+  //     href: "/",
+  //     color: "text-yellow-400",
+  //   },
+  //   {
+  //     label: "Dashboard",
+  //     icon: LayoutDashboard,
+  //     href: "/dashboard",
+  //     color: "text-blue-400",
+  //   },
+  //   {
+  //     label: "Blog Management",
+  //     icon: BookAIcon,
+  //     href: "/dashboard/blog-management", // Fixed path
+  //     color: "text-blue-400",
+  //   },
+  //   {
+  //     label: "Products",
+  //     icon: Warehouse,
+  //     href: "#",
+  //     color: "text-purple-400",
+  //     subRoutes: productSubRoutes,
+  //   },
+  //   {
+  //     label: "Videos",
+  //     icon: VideoIcon, // from lucide-react
+  //     href: "/videos",
+  //     color: "text-red-400",
+  //   },
+
+  //   {
+  //     label: "Blog",
+  //     icon: BookOpen,
+  //     href: "/blog",
+  //     color: "text-green-400",
+  //   }
+
+  // ];
+
   
+  // Check if user is admin
+  const isAdmin = user?.publicMetadata?.role === "admin";
 
   // Pull your category names out for the Products sub‑menu
   const productSubRoutes = categories.map((c) => ({
@@ -34,11 +92,24 @@ export default function Sidebar() {
   // Single source of truth for your menu
   const routes = [
     {
+      label: "Home",
+      icon: Home,
+      href: "/",
+      color: "text-yellow-400",
+    },
+    {
       label: "Dashboard",
       icon: LayoutDashboard,
       href: "/dashboard",
       color: "text-blue-400",
     },
+    // Conditionally show Blog Management for admins
+    ...(isAdmin ? [{
+      label: "Blog Management",
+      icon: BookAIcon,
+      href: "/blog-management",
+      color: "text-blue-400",
+    }] : []),
     {
       label: "Products",
       icon: Warehouse,
@@ -47,12 +118,17 @@ export default function Sidebar() {
       subRoutes: productSubRoutes,
     },
     {
-    label: "Videos",
-    icon: VideoIcon, // from lucide-react
-    href: "/videos",
-    color: "text-red-400",
-  }
-    
+      label: "Videos",
+      icon: VideoIcon,
+      href: "/videos",
+      color: "text-red-400",
+    },
+    {
+      label: "Blog",
+      icon: BookOpen,
+      href: "/blog",
+      color: "text-green-400",
+    }
   ];
 
 

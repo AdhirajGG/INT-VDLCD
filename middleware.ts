@@ -17,8 +17,8 @@
 
 // export const config = {
 //   matcher: [
-    // '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // '/(api|trpc)(.*)',
+// '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+// '/(api|trpc)(.*)',
 //   ],
 // };
 
@@ -28,10 +28,21 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 // Public routes (anyone can hit these)
 const isPublicRoute = createRouteMatcher([
+  // "/",              // home
+  // "/sign-in(.*)",   // sign-in (and any nested paths)
+  // "/sign-up(.*)",   // sign-up
+  // "/blog(.*)",      // all blog routes
+  // "/products(.*)",  // all product routes
+  // "/videos(.*)",    // all video routes
+  // "/(public)(.*)",  // public routes
+  // "/(dashboard)(.*)",  // dashboard routes
   "/",              // home
-  "/sign-in(.*)",   // sign-in (and any nested paths)
+  "/sign-in(.*)",   // sign-in
   "/sign-up(.*)",   // sign-up
-  "/cart(.*)",     // cart
+  "/api(.*)",       // all API routes
+  "/products(.*)",  // product routes
+  "/videos(.*)",    // video routes
+  // Only protect blog routes
 ]);
 
 // Any routes you explicitly want Clerk to ignore entirely
@@ -54,7 +65,7 @@ export default clerkMiddleware(async (auth, req) => {
 export const config = {
   // Apply to every non‑static, non‑_next path, plus all /api and /trpc calls
   matcher: [
-       '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
     '/(api|trpc)(.*)',        // your API endpoints
   ],
 };

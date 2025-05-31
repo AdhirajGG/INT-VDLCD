@@ -2,18 +2,18 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-
 export async function GET() {
   try {
-    const activeUsers = await prisma.user.count({
+    // Active users: last active within 30 minutes
+    const activeCount = await prisma.user.count({
       where: {
         lastActiveAt: {
-          gte: new Date(Date.now() - 30 * 60 * 1000) // 30 minutes ago
-        }
-      }
+          gte: new Date(Date.now() - 30 * 60 * 1000),
+        },
+      },
     });
-    
-    return NextResponse.json({ count: activeUsers });
+
+    return NextResponse.json({ count: activeCount });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch active users" },
