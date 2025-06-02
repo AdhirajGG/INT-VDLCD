@@ -15,9 +15,6 @@ import {
   ChevronUp,
   Home,
   LayoutDashboard,
-  ListOrdered,
-  Settings,
-  ShoppingCart,
   VideoIcon,
   Warehouse,
 } from "lucide-react";
@@ -29,57 +26,6 @@ export default function Sidebar() {
   const { categories, refreshCategories } = useMachines();
  const { user } = useUser(); // Get user
 
-  // // Pull your category names out for the Products sub‑menu
-  // const productSubRoutes = categories.map((c) => ({
-  //   label: c.name,
-  //   href: `/products/category/${c.name.toLowerCase().replace(/\s+/g, "-")}`,
-  // }));
-
-  // // Single source of truth for your menu
-  // const routes = [
-
-  //   {
-  //     label: "Home",
-  //     icon: Home,
-  //     href: "/",
-  //     color: "text-yellow-400",
-  //   },
-  //   {
-  //     label: "Dashboard",
-  //     icon: LayoutDashboard,
-  //     href: "/dashboard",
-  //     color: "text-blue-400",
-  //   },
-  //   {
-  //     label: "Blog Management",
-  //     icon: BookAIcon,
-  //     href: "/dashboard/blog-management", // Fixed path
-  //     color: "text-blue-400",
-  //   },
-  //   {
-  //     label: "Products",
-  //     icon: Warehouse,
-  //     href: "#",
-  //     color: "text-purple-400",
-  //     subRoutes: productSubRoutes,
-  //   },
-  //   {
-  //     label: "Videos",
-  //     icon: VideoIcon, // from lucide-react
-  //     href: "/videos",
-  //     color: "text-red-400",
-  //   },
-
-  //   {
-  //     label: "Blog",
-  //     icon: BookOpen,
-  //     href: "/blog",
-  //     color: "text-green-400",
-  //   }
-
-  // ];
-
-  
   // Check if user is admin
   const isAdmin = user?.publicMetadata?.role === "admin";
 
@@ -145,7 +91,7 @@ export default function Sidebar() {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold"
           >
-            Neko
+            VDLCD
           </motion.h1>
         </Link>
 

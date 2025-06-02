@@ -1,4 +1,4 @@
-// app/(dashboard)/(routes)/blog/[slug]/page.tsx
+// app/(dashboard)/(routes)/(public)/blog/[slug]/page.tsx
 
 "use client";
 
@@ -91,7 +91,7 @@ export default function BlogPostPage() {
           {new Date(post.createdAt).toLocaleDateString()}
         </p>
         {post.image && (
-          <div className="relative h-96 w-full mb-8 rounded-xl overflow-hidden"
+          <div className="relative h-full w-full mb-8 rounded-xl overflow-hidden"
           
           >
             <img 
