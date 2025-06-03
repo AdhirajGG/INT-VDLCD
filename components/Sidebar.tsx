@@ -80,19 +80,19 @@ export default function Sidebar() {
 
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-b from-gray-900 to-gray-800 text-white py-4 space-y-4">
+    <div className="flex flex-col h-full bg-gradient-to-b from-gray-500 to-gray-600 text-white py-4 space-y-4">
       <div className="px-3 flex-1">
         <Link href="/" className="flex items-center pl-3 mb-14">
-          <div className="relative w-20 h-10 mr-2">
+          <div className="relative w-40 h-10 mr-2">
             <Image fill alt="Logo" src="/VD-logo.png" />
           </div>
-          <motion.h1
+          {/* <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold"
           >
             VDLCD
-          </motion.h1>
+          </motion.h1> */}
         </Link>
 
         <nav className="space-y-1">

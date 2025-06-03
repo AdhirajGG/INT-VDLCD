@@ -71,9 +71,9 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-950 to-slate-900 relative">
       {/* Auth Buttons */}
-      
+
       <div className="absolute right-4 top-4 flex gap-3 z-50">
-        
+
         {isSignedIn ? (
           <Link href="/dashboard">
             <Button className="rounded-full px-6 gap-2 bg-indigo-600 hover:bg-indigo-700">
@@ -81,15 +81,15 @@ export default function Landing() {
               Dashboard
             </Button>
           </Link>
-          
+
         ) : (
           <>
-          <Link href="/dashboard">
-            <Button className="rounded-full px-6 gap-2 bg-indigo-600 hover:bg-indigo-700">
-              <LayoutDashboard className="h-4 w-4" />
-              Dashboard
-            </Button>
-          </Link>
+            <Link href="/dashboard">
+              <Button className="rounded-full px-6 gap-2 bg-indigo-600 hover:bg-indigo-700">
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
             <Link href="/sign-in">
               <Button variant="outline" className="rounded-full px-6 gap-2 border-indigo-500 text-white-100 hover:bg-indigo-900/50">
                 <LogIn className="h-4 w-4" />
@@ -103,15 +103,15 @@ export default function Landing() {
               </Button>
             </Link>
           </>
-        )}<UserButton/>
+        )}<UserButton />
       </div>
 
       {/* Hero Section */}
       <header className="container mx-auto px-4 py-16 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 20 }} // remove or comment this out to increase performance
+          animate={{ opacity: 1, y: 0 }}  // remove or comment this out to increase performance
+          transition={{ duration: 0.8 }}  // remove or comment this out to increase performance
           className="text-white"
         >
           <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
@@ -142,7 +142,7 @@ export default function Landing() {
             Explore our range of industrial automation solutions and instructional videos
           </p>
         </div>
-        
+
         {/* Show CollapsibleCards for all users */}
         <div className="mt-8">
           <CollapsibleCards categories={categories} videos={videos} />
@@ -199,7 +199,7 @@ export default function Landing() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {latestPosts.map(post => (
             <motion.div key={post.id} whileHover={{ y: -5 }} className="bg-indigo-900/30 rounded-2xl p-6"
-            
+
             >
               {post.image && (
                 <div className="relative h-48 w-full mb-4 rounded-lg overflow-hidden">

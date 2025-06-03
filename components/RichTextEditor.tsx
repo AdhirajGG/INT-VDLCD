@@ -9,7 +9,7 @@ import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
 import { Color } from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
-import CodeBlock from "@tiptap/extension-code-block";
+// import CodeBlock from "@tiptap/extension-code-block";
 import Blockquote from "@tiptap/extension-blockquote";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -78,13 +78,13 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
                     target: '_blank',
                 },
             }),
-            TextStyle,
-            Color,
-            CodeBlock.configure({
-                HTMLAttributes: {
-                    class: "bg-gray-900 text-white p-4 rounded-md font-mono",
-                },
-            }),
+            // TextStyle,
+            // Color,
+            // CodeBlock.configure({
+            //     HTMLAttributes: {
+            //         class: "bg-gray-900 text-white p-4 rounded-md font-mono",
+            //     },
+            // }),
             Blockquote.configure({
                 HTMLAttributes: {
                     class: "border-l-4 border-gray-500 pl-4 italic",
@@ -201,18 +201,18 @@ const MenuBar = ({ editor, setShowLinkDialog }: { editor: any; setShowLinkDialog
             icon: <Strikethrough className="h-4 w-4" />,
             title: "Strikethrough",
         },
-        {
-            onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
-            active: editor.isActive("heading", { level: 1 }),
-            icon: <Heading1 className="h-4 w-4" />,
-            title: "Heading 1",
-        },
-        {
-            onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
-            active: editor.isActive("heading", { level: 2 }),
-            icon: <Heading2 className="h-4 w-4" />,
-            title: "Heading 2",
-        },
+        // {
+        //     onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+        //     active: editor.isActive("heading", { level: 1 }),
+        //     icon: <Heading1 className="h-4 w-4" />,
+        //     title: "Heading 1",
+        // },
+        // {
+        //     onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+        //     active: editor.isActive("heading", { level: 2 }),
+        //     icon: <Heading2 className="h-4 w-4" />,
+        //     title: "Heading 2",
+        // },
         {
             onClick: () => editor.chain().focus().toggleBulletList().run(),
             active: editor.isActive("bulletList"),
@@ -264,12 +264,12 @@ const MenuBar = ({ editor, setShowLinkDialog }: { editor: any; setShowLinkDialog
             icon: <LinkIcon className="h-4 w-4" />,
             title: "Link",
         },
-        {
-            onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-            active: editor.isActive("codeBlock"),
-            icon: <Code className="h-4 w-4" />,
-            title: "Code Block",
-        },
+        // {
+        //     onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+        //     active: editor.isActive("codeBlock"),
+        //     icon: <Code className="h-4 w-4" />,
+        //     title: "Code Block",
+        // },
         {
             onClick: () => editor.chain().focus().toggleBlockquote().run(),
             active: editor.isActive("blockquote"),
