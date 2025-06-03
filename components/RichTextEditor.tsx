@@ -282,8 +282,8 @@ const MenuBar = ({ editor, setShowLinkDialog }: { editor: any; setShowLinkDialog
             title: "Horizontal Rule",
         },
         {
-            onClick: () => editor.chain().focus().setColor("#958DF1").run(),
-            active: editor.isActive("textStyle", { color: "#958DF1" }),
+            onClick: () => editor.chain().focus().setColor("#00FFFF").run(),
+            active: editor.isActive("textStyle", { color: "#00FFFF" }),
             icon: <Palette className="h-4 w-4" />,
             title: "Set Color",
         },

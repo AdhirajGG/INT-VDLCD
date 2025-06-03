@@ -71,6 +71,7 @@ export default function BlogListPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl font-bold mb-8 text-center"
           style={{ color: colors.text.primary }}
+          
         >
           Blog
         </motion.h1>
@@ -84,6 +85,7 @@ export default function BlogListPage() {
               transition={{ duration: 0.3 }}
               className="rounded-xl overflow-hidden border"
               style={{ background: colors.background.light, borderColor: colors.primary.dark }}
+              whileHover={{ y: -5 }}
             >
               {post.image && (
                 <div className="relative h-48 w-full">

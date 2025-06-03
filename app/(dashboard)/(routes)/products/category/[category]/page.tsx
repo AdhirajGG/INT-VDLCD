@@ -50,11 +50,12 @@ export default function CategoryProductsPage() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="p-8 max-w-screen mx-auto min-h-screen"
+      className=" shadow-2xl max-w-screen mx-auto min-h-screen p-4 sm:p-6 space-y-6"
+      style={{ background: colors.background.dark }}
     >
-      <div className="rounded-3xl p-8 shadow-2xl"
+      {/* <div className="   p-4 sm:p-6 space-y-6 min-h-screen"
         style={{ background: colors.background.main }}
-      >
+      > */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -67,11 +68,13 @@ export default function CategoryProductsPage() {
           {normalizedCategory.charAt(0).toUpperCase() + normalizedCategory.slice(1)} Equipment
         </motion.h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
           {filtered.map((product) => (
-            <motion.div key={product.slug}>
+            <motion.div key={product.slug}
+            whileHover={{ y: -5 }}
+            >
               <Card
-                className="rounded-xl p-6 border transition-colors "
+                className="rounded-xl p-6 border transition-colors"
                 style={{
                   backgroundColor: colors.background.light,
                   borderColor: `${colors.background.light}80`
@@ -116,7 +119,7 @@ export default function CategoryProductsPage() {
             </motion.div>
           ))}
         </div>
-      </div>
+      {/* </div> */}
     </motion.div>
   );
 }

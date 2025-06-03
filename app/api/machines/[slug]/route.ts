@@ -3,13 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/clerkAdmin";
 
+
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params;
+    
     const machine = await prisma.machine.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
     });
 
     if (!machine) {
@@ -46,6 +49,7 @@ export async function PUT(req: NextRequest, { params }: { params: { slug: string
       data: {
         model: data.model,
         image: data.image,
+        imagePublicId: data.imagePublicId, // Save the Cloudinary public ID
         description: data.description,
         category: data.category,
         specs: data.specs,

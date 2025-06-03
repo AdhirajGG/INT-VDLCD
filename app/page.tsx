@@ -91,7 +91,7 @@ export default function Landing() {
             </Button>
           </Link>
             <Link href="/sign-in">
-              <Button variant="outline" className="rounded-full px-6 gap-2 border-indigo-500 text-indigo-100 hover:bg-indigo-900/50">
+              <Button variant="outline" className="rounded-full px-6 gap-2 border-indigo-500 text-white-100 hover:bg-indigo-900/50">
                 <LogIn className="h-4 w-4" />
                 Login
               </Button>
@@ -198,7 +198,9 @@ export default function Landing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {latestPosts.map(post => (
-            <div key={post.id} className="bg-indigo-900/30 rounded-2xl p-6">
+            <motion.div key={post.id} whileHover={{ y: -5 }} className="bg-indigo-900/30 rounded-2xl p-6"
+            
+            >
               {post.image && (
                 <div className="relative h-48 w-full mb-4 rounded-lg overflow-hidden">
                   <img src={post.image} alt={post.title} className="object-cover w-full h-full" />
@@ -209,7 +211,7 @@ export default function Landing() {
               <Link href={`/blog/${post.slug}`} className="text-indigo-400 hover:text-indigo-300">
                 Read more
               </Link>
-            </div>
+            </motion.div>
           ))}
         </div>
 

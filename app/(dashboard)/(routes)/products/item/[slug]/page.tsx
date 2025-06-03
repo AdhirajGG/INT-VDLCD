@@ -12,7 +12,7 @@
 // import { toast } from "sonner";
 // import Loading from "./loading";
 // import { colors } from "@/lib/colors";
-// import RichTextEditor from "@/components/RichTextEditor"; // Add this
+// import RichTextEditor from "@/components/RichTextEditor";
 
 // type Machine = {
 //   slug: string;
@@ -21,18 +21,20 @@
 //   description: string;
 //   category: string;
 //   specs: Record<string, string>;
-//   videoUrl?: string; // Add videoUrl
+//   videoUrl?: string;
 // };
+
 // type Category = {
 //   name: string;
 // };
+
 // type EditFormData = {
 //   model: string;
 //   image: string;
 //   description: string;
 //   category: string;
 //   specs: [string, string][];
-//   videoUrl?: string; // Add videoUrl
+//   videoUrl?: string;
 // };
 
 // export default function ProductDetailPage() {
@@ -43,7 +45,7 @@
 
 //   const { user } = useUser();
 //   const isAdmin = user?.publicMetadata?.role === "admin";
-//  const [categories, setCategories] = useState<{ name: string }[]>([]);
+//   const [categories, setCategories] = useState<{ name: string }[]>([]);
 //   const [editOpen, setEditOpen] = useState(false);
 //   const [editData, setEditData] = useState<EditFormData>({
 //     model: "",
@@ -51,7 +53,7 @@
 //     description: "",
 //     category: "",
 //     specs: [],
-//     videoUrl: "", // Add videoUrl
+//     videoUrl: "",
 //   });
 
 //   useEffect(() => {
@@ -66,7 +68,7 @@
 //           description: data.description,
 //           category: data.category,
 //           specs: Object.entries(data.specs),
-//           videoUrl: data.videoUrl || "", // Add videoUrl
+//           videoUrl: data.videoUrl || "",
 //         });
 //       } catch {
 //         toast.error("Product not found");
@@ -75,6 +77,7 @@
 //         setLoading(false);
 //       }
 //     })();
+    
 //     const fetchCategories = async () => {
 //       try {
 //         const { data } = await axios.get('/api/categories');
@@ -109,7 +112,7 @@
 //         description: data.description,
 //         category: data.category,
 //         specs: Object.entries(data.specs),
-//         videoUrl: data.videoUrl || "", // Add videoUrl
+//         videoUrl: data.videoUrl || "",
 //       });
 //       setEditOpen(false);
 //       router.refresh();
@@ -157,13 +160,16 @@
 //     }
 //   };
 
-  
-
-
-
 //   if (loading) return <div className="container p-6"><Loading /></div>;
 //   if (!machine) return null;
- 
+  
+//   // Helper function to extract YouTube ID
+//   const getYouTubeId = (url: string): string | null => {
+//     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+//     const match = url.match(regExp);
+//     return (match && match[2].length === 11) ? match[2] : null;
+//   };
+
 //   return (
 //     <div className="container p-6 min-h-screen">
 //       <div
@@ -193,7 +199,6 @@
 //                 <h1 className="text-4xl font-bold" style={{ color: colors.text.primary }}>
 //                   {machine.model}
 //                 </h1>
-                
 //               </div>
 //               {isAdmin && (
 //                 <div className="flex gap-2">
@@ -219,9 +224,12 @@
 //             </div>
 //           </div>
 
-//           <p className="leading-relaxed" style={{ color: colors.text.secondary }}>
-//             {machine.description}
-//           </p>
+//           {/* Formatted HTML Description */}
+//           <div 
+//             className="prose prose-invert max-w-none" 
+//             style={{ color: colors.text.primary }}
+//             dangerouslySetInnerHTML={{ __html: machine.description }} 
+//           />
 
 //           {/* Specifications */}
 //           <div
@@ -244,8 +252,23 @@
 //             </div>
 //           </div>
 
-//           {/* Action Buttons */}
-        
+//           {/* Video Section */}
+//           {machine.videoUrl && (
+//             <div className="mt-8">
+//               <h2 className="text-xl font-semibold mb-4" style={{ color: colors.text.primary }}>
+//                 Product Video
+//               </h2>
+//               <div className="aspect-video rounded-xl overflow-hidden">
+//                 <iframe
+//                   src={`https://www.youtube.com/embed/${getYouTubeId(machine.videoUrl)}`}
+//                   title={machine.model}
+//                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+//                   allowFullScreen
+//                   className="w-full h-full"
+//                 />
+//               </div>
+//             </div>
+//           )}
 //         </div>
 //       </div>
 
@@ -269,8 +292,6 @@
 //                 />
 //               </div>
 
-             
-
 //               <div className="col-span-full">
 //                 <Label>Image URL</Label>
 //                 <Input
@@ -279,12 +300,24 @@
 //                 />
 //               </div>
 
+//               {/* Video URL */}
 //               <div className="col-span-full">
+//                 <Label>Video URL (YouTube)</Label>
+//                 <Input
+//                   value={editData.videoUrl || ''}
+//                   onChange={(e) => setEditData(d => ({ ...d, videoUrl: e.target.value }))}
+//                   placeholder="https://www.youtube.com/watch?v=..."
+//                 />
+//               </div>
+
+//               {/* Rich Text Editor for Description */}
+//               <div className="col-span-full"
+//               style={{ color: colors.text.primary }}
+//               >
 //                 <Label>Description</Label>
-//                 <textarea
+//                 <RichTextEditor
 //                   value={editData.description}
-//                   onChange={(e) => setEditData(d => ({ ...d, description: e.target.value }))}
-//                   className="w-full border rounded-md p-2 min-h-[100px] bg-indigo-900/30 border-indigo-800/50 text-indigo-100"
+//                   onChange={value => setEditData(d => ({ ...d, description: value }))}
 //                 />
 //               </div>
 
@@ -363,7 +396,6 @@
 //     </div>
 //   );
 // }
-
 // app/(dashboard)/(routes)/products/item/[slug]/page.tsx
 "use client";
 
@@ -379,11 +411,13 @@ import { toast } from "sonner";
 import Loading from "./loading";
 import { colors } from "@/lib/colors";
 import RichTextEditor from "@/components/RichTextEditor";
+import ImageUpload from "@/components/ImageUpload";
 
 type Machine = {
   slug: string;
   model: string;
   image: string;
+  imagePublicId?: string;
   description: string;
   category: string;
   specs: Record<string, string>;
@@ -397,6 +431,7 @@ type Category = {
 type EditFormData = {
   model: string;
   image: string;
+  imagePublicId?: string;
   description: string;
   category: string;
   specs: [string, string][];
@@ -416,6 +451,7 @@ export default function ProductDetailPage() {
   const [editData, setEditData] = useState<EditFormData>({
     model: "",
     image: "",
+    imagePublicId: "",
     description: "",
     category: "",
     specs: [],
@@ -431,6 +467,7 @@ export default function ProductDetailPage() {
         setEditData({
           model: data.model,
           image: data.image,
+          imagePublicId: data.imagePublicId || "",
           description: data.description,
           category: data.category,
           specs: Object.entries(data.specs),
@@ -464,10 +501,33 @@ export default function ProductDetailPage() {
   const handleAddSpec = () => setEditData(d => ({ ...d, specs: [...d.specs, ["", ""]] }));
   const handleDeleteSpec = (index: number) => setEditData(d => ({ ...d, specs: d.specs.filter((_, i) => i !== index) }));
 
+  const handleImageChange = (url: string, publicId?: string) => {
+    setEditData(d => ({ 
+      ...d, 
+      image: url,
+      imagePublicId: publicId || ""
+    }));
+  };
+
   const handleUpdateProduct = async () => {
     try {
       const specsObj = Object.fromEntries(editData.specs.filter(([k, v]) => k && v));
-      await axios.put(`/api/machines/${slug}`, { ...editData, specs: specsObj });
+      
+      // If image was changed and there's an old image, delete it from Cloudinary
+      if (machine?.imagePublicId && editData.imagePublicId !== machine.imagePublicId && machine.imagePublicId) {
+        try {
+          await axios.delete('/api/upload', {
+            data: { publicId: machine.imagePublicId }
+          });
+        } catch (error) {
+          console.warn('Failed to delete old image:', error);
+        }
+      }
+
+      await axios.put(`/api/machines/${slug}`, { 
+        ...editData, 
+        specs: specsObj 
+      });
       toast.success("Product updated!");
 
       const { data } = await axios.get<Machine>(`/api/machines/${slug}`);
@@ -475,6 +535,7 @@ export default function ProductDetailPage() {
       setEditData({
         model: data.model,
         image: data.image,
+        imagePublicId: data.imagePublicId || "",
         description: data.description,
         category: data.category,
         specs: Object.entries(data.specs),
@@ -510,6 +571,17 @@ export default function ProductDetailPage() {
             <Button
               style={{ backgroundColor: colors.state.error }}
               onClick={async () => {
+                // Delete image from Cloudinary if it exists
+                if (machine?.imagePublicId) {
+                  try {
+                    await axios.delete('/api/upload', {
+                      data: { publicId: machine.imagePublicId }
+                    });
+                  } catch (error) {
+                    console.warn('Failed to delete image from Cloudinary:', error);
+                  }
+                }
+                
                 await axios.delete(`/api/machines/${slug}`);
                 toast.dismiss(t);
                 toast.success("Product deleted successfully");
@@ -658,11 +730,12 @@ export default function ProductDetailPage() {
                 />
               </div>
 
+              {/* Image Upload Section */}
               <div className="col-span-full">
-                <Label>Image URL</Label>
-                <Input
+                <Label>Product Image</Label>
+                <ImageUpload
                   value={editData.image}
-                  onChange={(e) => setEditData(d => ({ ...d, image: e.target.value }))}
+                  onChange={handleImageChange}
                 />
               </div>
 

@@ -29,12 +29,12 @@ const MobileSidebar = () => {
     return (
     <Sheet>
         <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="md:hidden">
+            <Button variant="ghost" size="icon" className="md:hidden text-white">
                 <Menu />
                 <VisuallyHidden>Toggle navigation menu</VisuallyHidden>
             </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="p-0">
+        <SheetContent side="left" className="p-0 text-white">
             {/* Required SheetTitle for accessibility */}
             <VisuallyHidden>
                 <SheetTitle>Navigation Menu</SheetTitle>

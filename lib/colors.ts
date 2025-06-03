@@ -20,6 +20,13 @@ export const colors = {
     secondary: "#94a3b8",
     tertiary: "#475569",
   },
+  icons:{
+    primary:'7e47ff',
+    secondary:'dcccff',
+    tertiary:'952395',
+    quadra:'1CF2EB',
+
+  },
   state: {
     hover: "#1e293b",
     active: "#334155",

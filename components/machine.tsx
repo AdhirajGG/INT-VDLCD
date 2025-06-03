@@ -15,10 +15,28 @@ export interface Machine {
 export interface Category {
   name: string;
 }
+export interface BlogPost {
+
+id: number;
+
+title: string;
+
+slug: string;
+
+image?: string;
+
+content: string;
+
+excerpt?: string;
+
+createdAt: string; // or Date if we convert
+
+}
 
 export const useMachines = () => {
   const [machines, setMachines] = useState<Machine[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,6 +69,15 @@ export const useMachines = () => {
     }
   };
 
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get('/api/blog');
+      setBlogs(response.data);
+    } catch (error) {
+      console.error("Fetch categories error:", error);
+    }
+  };  
+
   const addMachine = async (machineData: any) => {
     setError(null);
     try {
@@ -71,6 +98,7 @@ export const useMachines = () => {
   useEffect(() => {
     fetchMachines();
     fetchCategories();
+    fetchBlogs();
   }, []);
 
   return {
@@ -78,8 +106,10 @@ export const useMachines = () => {
     categories,
     loading,
     error,
+    blogs,
     addMachine,
     refresh: fetchMachines,
-    refreshCategories: fetchCategories
+    refreshCategories: fetchCategories,
+    refreshBlog: fetchBlogs
   };
 };

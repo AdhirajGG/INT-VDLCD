@@ -25,6 +25,10 @@ model Machine {
   category    String
   specs       Json
   videoUrl    String?
+   // Add these fields for better image management
+  imagePublicId String? // Cloudinary public ID for deletion
+  createdAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt @default(now())
 
   @@map("machines")
 }
@@ -60,6 +64,7 @@ model BlogPost {
   title     String
   slug      String   @unique
   image     String?
+  imagePublicId String?  // Add this for Cloudinary image management
   content   String   // HTML content from rich text editor
   excerpt   String?  // Short summary for cards
   createdAt DateTime @default(now())
