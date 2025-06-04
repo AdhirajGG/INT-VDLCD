@@ -1,17 +1,17 @@
 
 
 // app/api/users/[userId]/activity/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { userId: string } }
 ) {
   try {
     // Find user by clerkId
     const user = await prisma.user.findUnique({
-      where: { clerkId: params.userId }
+      where: { id: params.userId }
     });
 
     if (!user) {
