@@ -10,6 +10,7 @@ import { colors } from "@/lib/colors";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface BlogPost {
   id: number;
@@ -94,10 +95,13 @@ export default function BlogPostPage() {
           <div className="relative h-full w-full mb-8 rounded-xl overflow-hidden"
           
           >
-            <img 
+            <Image
               src={post.image} 
               alt={post.title} 
               className="object-cover w-full h-full"
+              
+              width={800}
+              height={800}
             />
           </div>
         )}

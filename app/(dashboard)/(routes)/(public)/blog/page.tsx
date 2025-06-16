@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { colors } from "@/lib/colors";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface BlogPost {
   id: number;
@@ -89,10 +90,11 @@ export default function BlogListPage() {
             >
               {post.image && (
                 <div className="relative h-48 w-full">
-                  <img 
+                  <Image
                     src={post.image} 
                     alt={post.title} 
                     className="object-cover w-full h-full"
+                    fill
                   />
                 </div>
               )}

@@ -78,8 +78,8 @@ export default function RichTextEditor({ value, onChange }: RichTextEditorProps)
                     target: '_blank',
                 },
             }),
-            // TextStyle,
-            // Color,
+            TextStyle,
+            Color,
             // CodeBlock.configure({
             //     HTMLAttributes: {
             //         class: "bg-gray-900 text-white p-4 rounded-md font-mono",

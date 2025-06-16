@@ -13,6 +13,7 @@ import {
   BookOpen,
   ChevronDown,
   ChevronUp,
+  Contact,
   Home,
   LayoutDashboard,
   VideoIcon,
@@ -43,12 +44,12 @@ export default function Sidebar() {
       href: "/",
       color: "text-yellow-400",
     },
-    {
-      label: "Dashboard",
-      icon: LayoutDashboard,
-      href: "/dashboard",
-      color: "text-blue-400",
-    },
+   ...(isAdmin ? [{
+            label: "Dashboard",
+            icon: LayoutDashboard,
+            href: "/dashboard",
+            color: "text-blue-400",
+        }] : []),
     // Conditionally show Blog Management for admins
     ...(isAdmin ? [{
       label: "Blog Management",
@@ -74,6 +75,12 @@ export default function Sidebar() {
       icon: BookOpen,
       href: "/blog",
       color: "text-green-400",
+    },
+    {
+      label: "Contact-Us",
+      icon: Contact,
+      href: "/contact",
+      color: "text-fuchsia-500",
     }
   ];
 

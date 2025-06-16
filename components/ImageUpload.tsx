@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { toast } from "sonner";
 import { colors } from "@/lib/colors";
+import Image from "next/image";
 
 interface ImageUploadProps {
   value: string;
@@ -99,10 +100,11 @@ export default function ImageUpload({
             className="relative aspect-square w-full max-w-sm rounded-lg overflow-hidden border-2"
             style={{ borderColor: colors.primary.main }}
           >
-            <img
+            <Image
               src={value}
               alt="Uploaded image"
               className="object-cover w-full h-full"
+              fill
             />
             {!disabled && (
               <Button

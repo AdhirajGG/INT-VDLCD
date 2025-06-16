@@ -1,12 +1,13 @@
 // app/api/contact/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import prisma from "@/lib/prisma";
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   // 1) Parse incoming JSON
-  let body: { name?: string; email?: string };
+  let body: { name?: string;  phone?: string; message?: string };
   try {
-    body = await req.json();
+    body = await request.json();
   } catch (parseErr) {
     console.error("[CONTACT_POST] JSON parse error:", parseErr);
     return NextResponse.json(
@@ -15,12 +16,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { name, email } = body;
+  const { name,  phone, message } = body;
 
   // 2) Validate inputs
-  if (!name || !email) {
+  if (!name  || !phone || !message) {
     return NextResponse.json(
-      { error: "Name and email are required." },
+      { error: "All fields are required." },
       { status: 400 }
     );
   }
@@ -32,9 +33,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!/^\S+@\S+\.\S+$/.test(email)) {
+  // if (!/^\S+@\S+\.\S+$/.test(email)) {
+  //   return NextResponse.json(
+  //     { error: "Invalid email format." },
+  //     { status: 400 }
+  //   );
+  // }
+
+  // Simple phone validation (at least 5 digits)
+  if (!/^[0-9\s+()\-]{5,20}$/.test(phone)) {
     return NextResponse.json(
-      { error: "Invalid email format." },
+      { error: "Invalid phone number format." },
       { status: 400 }
     );
   }
@@ -55,7 +64,24 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // 4) Create a transporter with explicit Gmail SMTP settings
+    // 4) Save to database
+    await prisma.contactSubmission.create({
+      data: {
+        name,
+        phone,
+        message,
+      },
+    });
+  } catch (dbErr: any) {
+    console.error("[CONTACT_POST] Database error:", dbErr);
+    return NextResponse.json(
+      { error: "Failed to save contact information." },
+      { status: 500 }
+    );
+  }
+
+  try {
+    // 5) Create a transporter with explicit Gmail SMTP settings
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -66,51 +92,39 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // 5) Verify the connection configuration before sending
+    // 6) Verify the connection configuration before sending
     await transporter.verify();
-  } catch (verifyErr: any) {
-    console.error("[CONTACT_POST] SMTP verification failed:", verifyErr);
-    return NextResponse.json(
-      {
-        error:
-          "SMTP configuration problem. " +
-          "Check your Gmail credentials (maybe you need an App Password).",
-      },
-      { status: 500 }
-    );
-  }
 
-  try {
-    // 6) Build the email
+    // 7) Build the email
     const mailOptions = {
       from: ADMIN_EMAIL,
-      to: ADMIN_EMAIL, // send the notification to yourself
-      subject: "New Consultation Request",
+      to: ADMIN_EMAIL,
+      subject: `New Contact Form Submission from ${name}`,
+      text: `
+        Name: ${name}
+        Phone: ${phone}
+        Message: ${message}
+      `,
       html: `
-        <h3>New Consultation Request</h3>
+        <h3>New Contact Form Submission</h3>
         <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
         <hr>
-        <p>This request was submitted from the VDLCD website.</p>
+        <p>Sent from VDLCD website at ${new Date().toLocaleString()}</p>
       `,
     };
 
-    // 7) Send the email
-    const info = await nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: { user: ADMIN_EMAIL, pass: ADMIN_PASS },
-    }).sendMail(mailOptions);
-
+    // 8) Send the email
+    const info = await transporter.sendMail(mailOptions);
     console.log("[CONTACT_POST] Email sent:", info.messageId);
+
     return NextResponse.json({ success: true });
-  } catch (sendErr: any) {
-    console.error("[CONTACT_POST] Error sending email:", sendErr);
-    // Don’t expose full SMTP stack to client—just log internally and return a generic message.
+  } catch (emailErr: any) {
+    console.error("[CONTACT_POST] Error sending email:", emailErr);
     return NextResponse.json(
-      { error: "Failed to send email. Please try again later." },
+      { error: "Failed to send notification email." },
       { status: 500 }
     );
   }

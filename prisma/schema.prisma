@@ -70,3 +70,31 @@ model BlogPost {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Testimonial {
+  id          Int      @id @default(autoincrement())
+  name        String
+  position    String
+  company     String
+  content     String
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Slide {
+  id          Int      @id @default(autoincrement())
+  imageUrl    String
+  topText     String?
+  bottomText  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id          Int      @id @default(autoincrement())
+  name        String
+  phone       String
+  message     String
+  createdAt   DateTime @default(now())
+}
