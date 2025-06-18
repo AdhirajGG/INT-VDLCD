@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import "react-phone-number-input/style.css";
 import { toast } from "sonner";
+import { colors } from "@/lib/colors";
 
 export default function Landing() {
   const { isSignedIn, user } = useUser();
@@ -170,67 +171,74 @@ export default function Landing() {
           {/* Slideshow Section */}
           {slides.length > 0 && (
             <div
-              className="relative w-full max-w-4xl mx-auto h-120 rounded-2xl overflow-hidden mb-12 shadow-xl"
+              className="relative w-full h-0 pb-[56.25%] rounded-2xl overflow-hidden mb-12 shadow-xl"
               onMouseEnter={() => setIsPaused(true)}
               onMouseLeave={() => setIsPaused(false)}
             >
-              {/* Slides */}
-              {slides.map((slide, index) => (
-                <div
-                  key={slide.id}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
-                    }`}
-                >
-                  <Image
-                    src={slide.imageUrl}
-                    alt="Slideshow"
-                    fill
-                    className="object-cover"
-                  />
-
-                  {/* Top Text */}
-                  {slide.topText && (
-                    <div className="absolute top-0 left-0 right-0 bg-black/50 p-4 text-white text-xl font-bold text-center">
-                      {slide.topText}
-                    </div>
-                  )}
-
-                  {/* Bottom Text */}
-                  {slide.bottomText && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4 text-white text-xl font-bold text-center">
-                      {slide.bottomText}
-                    </div>
-                  )}
-                </div>
-              ))}
-
-              {/* Navigation Arrows */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-2 text-white hover:bg-black/70"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-2 text-white hover:bg-black/70"
-              >
-                <ChevronRight size={24} />
-              </button>
-
-              {/* Slide Indicators */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                {slides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      setCurrentSlide(index);
-                      resetTimer();
-                    }}
-                    className={`w-3 h-3 rounded-full ${index === currentSlide ? 'bg-white' : 'bg-white/50'
+              {/* Slides container */}
+              <div className="absolute inset-0">
+                {slides.map((slide, index) => (
+                  <div
+                    key={slide.id}
+                    className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                       }`}
-                  />
+                  >
+                    <Image
+                      src={slide.imageUrl}
+                      alt="Slideshow"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 80vw"
+                    />
+
+                    {/* Top Text */}
+                    {slide.topText && (
+                      <div className="absolute top-0 left-0 right-0 bg-black/50 p-3 md:p-4 text-white   text-sm md:text-xl font-bold text-center"
+                      style={{ color: colors.secondary.light }}
+                      >
+                        {slide.topText}
+                      </div>
+                    )}
+
+                    {/* Bottom Text */}
+                    {slide.bottomText && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-3 md:p-4 text-white text-sm md:text-xl font-bold text-center"
+                      style={{ color: colors.secondary.light }}
+                      >
+                        {slide.bottomText}
+                      </div>
+                    )}
+                  </div>
                 ))}
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 md:p-2 text-white hover:bg-black/70"
+                >
+                  <ChevronLeft className="w-4 h-4 md:w-6 md:h-6" />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 md:p-2 text-white hover:bg-black/70"
+                >
+                  <ChevronRight className="w-4 h-4 md:w-6 md:h-6" />
+                </button>
+
+                {/* Slide Indicators */}
+                <div className="absolute bottom-2 md:bottom-4 left-0 right-0 flex justify-center space-x-1 md:space-x-2">
+                  {slides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        setCurrentSlide(index);
+                        resetTimer();
+                      }}
+                      className={`w-2 h-2 md:w-3 md:h-3 rounded-full ${index === currentSlide ? 'bg-white' : 'bg-white/50'
+                        }`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           )}

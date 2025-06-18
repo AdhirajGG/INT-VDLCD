@@ -198,6 +198,7 @@ export function SlideshowDialog() {
               onChange={(e) => setTopText(e.target.value)}
               placeholder="Optional text to display at top"
               className="w-full"
+              style={{ color: colors.text.primary }}
             />
           </div>
           
@@ -208,7 +209,8 @@ export function SlideshowDialog() {
               value={bottomText}
               onChange={(e) => setBottomText(e.target.value)}
               placeholder="Optional text to display at bottom"
-              className="w-full"
+              className="w-full "
+              style={{ color: colors.text.primary }}
             />
           </div>
         </div>

@@ -6,6 +6,102 @@
 
 // prsma/schema.prisma
 
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// // prisma/schema.prisma
+// model Machine {
+//   id          Int     @id @default(autoincrement())
+//   slug        String  @unique
+//   model       String
+//   image       String
+//   description String
+//   category    String
+//   specs       Json
+//   videoUrl    String?
+//    // Add these fields for better image management
+//   imagePublicId String? // Cloudinary public ID for deletion
+//   createdAt   DateTime @default(now())
+//   updatedAt     DateTime @updatedAt @default(now())
+
+//   @@map("machines")
+// }
+
+
+
+// model Category {
+//   id   Int    @id @default(autoincrement())
+//   name String @unique
+// }
+
+// model User {
+//   id           String   @id @default(cuid())
+//   clerkId      String   @unique
+//   email        String   @unique
+//   lastActiveAt DateTime @default(now())
+// }
+
+// model VideoCategory {
+//   id     Int     @id @default(autoincrement())
+//   name   String  @unique
+//   videos Video[]
+// }
+
+// model Video {
+//   id         Int           @id @default(autoincrement())
+//   title      String
+//   youtubeId  String
+//   category   VideoCategory @relation(fields: [categoryId], references: [id])
+//   categoryId Int
+// }
+
+// model BlogPost {
+//   id        Int      @id @default(autoincrement())
+//   title     String
+//   slug      String   @unique
+//   image     String?
+//   imagePublicId String?  // Add this for Cloudinary image management
+//   content   String   // HTML content from rich text editor
+//   excerpt   String?  // Short summary for cards
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+// model Testimonial {
+//   id          Int      @id @default(autoincrement())
+//   name        String
+//   position    String
+//   company     String
+//   content     String
+//   avatarUrl   String?
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+// }
+
+// model Slide {
+//   id          Int      @id @default(autoincrement())
+//   imageUrl    String
+//   topText     String?
+//   bottomText  String?
+//   createdAt   DateTime @default(now())
+//   updatedAt   DateTime @updatedAt
+// }
+
+// model ContactSubmission {
+//   id          Int      @id @default(autoincrement())
+//   name        String
+//   phone       String
+//   message     String
+//   createdAt   DateTime @default(now())
+// }
+
+// prisma/schema.prisma
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -15,7 +111,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// prisma/schema.prisma
 model Machine {
   id          Int     @id @default(autoincrement())
   slug        String  @unique
@@ -23,12 +118,12 @@ model Machine {
   image       String
   description String
   category    String
-  specs       Json
+  specs       Json    // This will store array of [key, value] pairs: [["spec1", "value1"], ["spec2", "value2"]]
   videoUrl    String?
-   // Add these fields for better image management
+  // Add these fields for better image management
   imagePublicId String? // Cloudinary public ID for deletion
   createdAt   DateTime @default(now())
-  updatedAt     DateTime @updatedAt @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
 
   @@map("machines")
 }

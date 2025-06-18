@@ -224,6 +224,7 @@ export function TestimonialDialog() {
               onChange={(e) => setName(e.target.value)}
               required
               className="w-full"
+              style={{ color: colors.text.primary }}
             />
           </div>
           
@@ -235,6 +236,7 @@ export function TestimonialDialog() {
               onChange={(e) => setPosition(e.target.value)}
               required
               className="w-full"
+              style={{ color: colors.text.primary }}
             />
           </div>
           
@@ -246,6 +248,7 @@ export function TestimonialDialog() {
               onChange={(e) => setCompany(e.target.value)}
               required
               className="w-full"
+              style={{ color: colors.text.primary }}
             />
           </div>
           
@@ -258,6 +261,7 @@ export function TestimonialDialog() {
               required
               rows={4}
               className="w-full"
+              style={{ color: colors.text.primary }}
             />
           </div>
           

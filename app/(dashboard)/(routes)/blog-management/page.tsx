@@ -238,13 +238,8 @@ export default function BlogDashboardPage() {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: colors.background.dark }}>
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 mx-auto mb-4" 
-            style={{ borderColor: colors.primary.main }}
-          />
-          <p style={{ color: colors.text.secondary }}>Loading...</p>
-        </div>
+      <div className="flex justify-center items-center h-screen" style={{ background: colors.background.dark }}>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-500"></div>
       </div>
     );
   }

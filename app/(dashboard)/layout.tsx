@@ -2,7 +2,7 @@
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/Sidebar";
 import { Toaster } from "@/components/ui/sonner";
-
+// import  IntercomChat  from '@/components/IntercomChat';
 
 
 
@@ -20,6 +20,7 @@ const DashboardLayout = ({
                 <main className="md:pl-72">
                     <Navbar />
                     {children}
+                     {/* <IntercomChat /> */}
                     <Toaster />
                 </main>
             </div>

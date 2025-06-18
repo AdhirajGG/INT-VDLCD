@@ -4,27 +4,6 @@ import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/clerkAdmin";
 
 
-// export async function GET(
-//   req: NextRequest,
-//   { params }: { params: Promise<{ slug: string }> }
-// ) {
-//   try {
-//     const { slug } = await params;
-    
-//     const machine = await prisma.machine.findUnique({
-//       where: { slug },
-//     });
-
-//     if (!machine) {
-//       return NextResponse.json({ error: "Not found" }, { status: 404 });
-//     }
-
-//     return NextResponse.json(machine);
-//   } catch (err) {
-//     console.error("GET /api/machines/[slug] error:", err);
-//     return NextResponse.json({ error: "Failed" }, { status: 500 });
-//   }
-// }
 
 export async function GET(
   req: NextRequest,
@@ -48,6 +27,7 @@ export async function GET(
 
 // UPDATE machine
 export async function PUT(req: NextRequest, { params }: { params: { slug: string } }) {
+    
   try {
     if (!(await isAdmin())) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

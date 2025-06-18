@@ -189,3 +189,32 @@
 [data-sonner-toast][data-swipe="end"] {
   animation: toast-out 0.2s ease-out;
 }
+/* Add to your global CSS file */
+.phone-input-container .PhoneInput {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.phone-input-container .PhoneInputInput {
+  background: transparent !important;
+  color: rgb(241 245 249) !important; /* text-slate-100 */
+  border: 0 !important;
+  outline: none !important;
+  width: 100% !important;
+}
+
+.phone-input-container .PhoneInputInput::placeholder {
+  color: rgb(148 163 184) !important; /* placeholder-slate-400 */
+}
+
+.phone-input-container .PhoneInputCountrySelect {
+  background: transparent !important;
+  color: rgb(241 245 249) !important; /* text-slate-100 */
+  border: 0 !important;
+  outline: none !important;
+  margin-right: 0.5rem !important;
+}
+
+.phone-input-container .PhoneInputCountrySelectArrow {
+  color: rgb(148 163 184) !important; /* text-slate-400 */
+}
