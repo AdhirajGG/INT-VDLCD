@@ -131,13 +131,7 @@ model Category {
   name String @unique
 }
 
-model User {
-  id           String   @id @default(cuid())
-  clerkId      String   @unique
-  email        String   @unique
-  lastActiveAt DateTime @default(now())
-  comments     Comment[] // Add relation to comments
-}
+
 
 model VideoCategory {
   id     Int     @id @default(autoincrement())
@@ -167,15 +161,17 @@ model BlogPost {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  content   String
-  authorId  String   // Reference to User.clerkId
-  author    User     @relation(fields: [authorId], references: [clerkId])
-  postId    Int
-  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
-  isApproved Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  content    String
+  authorId   String   // This will store the Clerk userId directly
+  postId     Int
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  @@map("comments")
 }
 
 model Testimonial {

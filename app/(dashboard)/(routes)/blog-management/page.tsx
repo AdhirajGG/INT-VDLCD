@@ -750,10 +750,10 @@ export default function BlogDashboardPage() {
         
         <Tabs defaultValue="posts" className="w-full">
           <TabsList className="grid w-full grid-cols-2" style={{ backgroundColor: colors.background.light }}>
-            <TabsTrigger value="posts" style={{ color: colors.text.primary }}>
+            <TabsTrigger value="posts" style={{ color: colors.text.secondary }}>
               Blog Posts
             </TabsTrigger>
-            <TabsTrigger value="comments" className="flex items-center gap-2" style={{ color: colors.text.primary }}>
+            <TabsTrigger value="comments" className="flex items-center gap-2" style={{ color: colors.text.secondary}}>
               Comments
               {pendingComments.length > 0 && (
                 <Badge variant="destructive" className="ml-1">

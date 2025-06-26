@@ -37,12 +37,6 @@ export async function PUT(
       where: { id: parseInt(id) },
       data: { isApproved },
       include: {
-        author: {
-          select: {
-            id: true,
-            email: true
-          }
-        },
         post: {
           select: {
             id: true,
@@ -53,7 +47,40 @@ export async function PUT(
       }
     });
 
-    return NextResponse.json(comment);
+    // Get user details from Clerk
+    try {
+      const clerkUser = await clerkClient.users.getUser(comment.authorId);
+      const userEmail = clerkUser.emailAddresses[0]?.emailAddress;
+      
+      const commentWithUserDetails = {
+        ...comment,
+        author: {
+          id: comment.authorId,
+          email: userEmail,
+          name: clerkUser.firstName && clerkUser.lastName 
+            ? `${clerkUser.firstName} ${clerkUser.lastName}`
+            : clerkUser.firstName || clerkUser.lastName || clerkUser.username || userEmail?.split('@')[0] || 'Anonymous',
+          imageUrl: clerkUser.imageUrl,
+          username: clerkUser.username || userEmail?.split('@')[0] || 'anonymous'
+        }
+      };
+
+      return NextResponse.json(commentWithUserDetails);
+    } catch (error) {
+      console.error(`Error fetching user details for ${comment.authorId}:`, error);
+      // Return comment with fallback user data
+      const commentWithFallback = {
+        ...comment,
+        author: {
+          id: comment.authorId,
+          email: 'deleted@user.com',
+          name: 'Deleted User',
+          imageUrl: null,
+          username: 'deleted_user'
+        }
+      };
+      return NextResponse.json(commentWithFallback);
+    }
   } catch (error) {
     console.error("Error updating comment:", error);
     return NextResponse.json(
