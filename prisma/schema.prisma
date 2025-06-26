@@ -4,8 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-// prsma/schema.prisma
 
+
+// // prisma/schema.prisma
 // datasource db {
 //   provider = "postgresql"
 //   url      = env("DATABASE_URL")
@@ -15,7 +16,6 @@
 //   provider = "prisma-client-js"
 // }
 
-// // prisma/schema.prisma
 // model Machine {
 //   id          Int     @id @default(autoincrement())
 //   slug        String  @unique
@@ -23,17 +23,15 @@
 //   image       String
 //   description String
 //   category    String
-//   specs       Json
+//   specs       Json    // This will store array of [key, value] pairs: [["spec1", "value1"], ["spec2", "value2"]]
 //   videoUrl    String?
-//    // Add these fields for better image management
+//   // Add these fields for better image management
 //   imagePublicId String? // Cloudinary public ID for deletion
 //   createdAt   DateTime @default(now())
-//   updatedAt     DateTime @updatedAt @default(now())
+//   updatedAt   DateTime @updatedAt @default(now())
 
 //   @@map("machines")
 // }
-
-
 
 // model Category {
 //   id   Int    @id @default(autoincrement())
@@ -138,6 +136,7 @@ model User {
   clerkId      String   @unique
   email        String   @unique
   lastActiveAt DateTime @default(now())
+  comments     Comment[] // Add relation to comments
 }
 
 model VideoCategory {
@@ -162,6 +161,19 @@ model BlogPost {
   imagePublicId String?  // Add this for Cloudinary image management
   content   String   // HTML content from rich text editor
   excerpt   String?  // Short summary for cards
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comments  Comment[] // Add relation to comments
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  authorId  String   // Reference to User.clerkId
+  author    User     @relation(fields: [authorId], references: [clerkId])
+  postId    Int
+  post      BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  isApproved Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

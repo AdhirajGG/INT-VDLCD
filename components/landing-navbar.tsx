@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, color } from "framer-motion";
 import { LayoutDashboard, Warehouse, ChevronDown, ChevronUp, Home, BookOpen, VideoIcon, BookAIcon, Contact } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useUser, UserButton } from "@clerk/nextjs";
@@ -13,6 +13,7 @@ import { Menu, Grid3X3, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { useMachines } from "./machine";
 import { cn } from "@/lib/utils";
+import { colors } from "@/lib/colors";
 
 export default function LandingNavbar() {
     const pathname = usePathname();
@@ -224,6 +225,7 @@ export default function LandingNavbar() {
                                     <Button
                                         variant="outline"
                                         className="rounded-full px-6 gap-2 border-indigo-500 text-indigo-100 hover:bg-indigo-900/50 transition-all duration-200 hover:scale-105"
+                                        style={{ color: colors.text.tertiary}}
                                     >
                                         Login
                                     </Button>
@@ -363,7 +365,8 @@ export default function LandingNavbar() {
                                                 <Link href="/sign-in">
                                                     <Button
                                                         variant="outline"
-                                                        className="w-full border-indigo-500 text-indigo-100 hover:bg-indigo-900/50 transition-all duration-200"
+                                                        className="w-full border-indigo-500  hover:bg-indigo-900/50 transition-all duration-200"
+                                                       style={{ color: colors.text.tertiary}}
                                                         onClick={() => setMenuOpen(false)}
                                                     >
                                                         Login

@@ -783,7 +783,6 @@ export default function DashboardPage() {
           <StatCard title="Total Products" value={machines.length} icon={<Warehouse style={{ color: colors.primary.main }} />} />
           <StatCard title="Categories" value={categories.length} icon={<ListTree style={{ color: colors.icons.quadra }} />} />
           <StatCard title="Blogs" value={blogs.length} icon={<BookCheck style={{ color: colors.icons.secondary }} />} />
-          <StatCard title="Active Users" value={activeUsers} icon={<Users style={{ color: colors.state.success }} />} />
         </div>
       </motion.div>
 
