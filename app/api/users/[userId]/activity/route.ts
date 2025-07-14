@@ -33,14 +33,14 @@
 //     );
 //   }
 // }
-// app/api/users/[userId]/activity/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     // Get authenticated user
@@ -53,9 +53,12 @@ export async function PATCH(
       );
     }
 
+    // Await the params to get userId
+    const { userId } = await params;
+
     // Verify the user exists in Clerk
     const client = await clerkClient();
-    const clerkUser = await client.users.getUser(params.userId);
+    const clerkUser = await client.users.getUser(userId);
     
     if (!clerkUser) {
       return NextResponse.json(
@@ -68,17 +71,17 @@ export async function PATCH(
     await prisma.userActivity.upsert({
       where: { 
         // Replace 'id' with your actual unique field name if different
-        id: params.userId 
+        id: userId 
       },
       update: { 
         lastActiveAt: new Date() 
       },
       create: {
         // Make sure 'id' or the unique field matches your schema
-        id: params.userId,
+        id: userId,
         lastActiveAt: new Date(),
         user: {
-          connect: { id: params.userId }
+          connect: { id: userId }
         }
       }
     });
