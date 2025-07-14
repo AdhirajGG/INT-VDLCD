@@ -56,6 +56,31 @@ import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/clerkAdmin";
 
 // Update category name
+// export async function PUT(
+//   req: NextRequest, 
+//   { params }: { params: Promise<{ categoryName: string }> }
+// ) {
+//   try {
+//     if (!(await isAdmin())) {
+//       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+//     }
+    
+//     const { categoryName } = await params;
+//     const oldName = decodeURIComponent(categoryName);
+//     const { name } = await req.json();
+    
+//     const updated = await prisma.category.update({
+//       where: { id: Number(categoryName) },
+//       data: { name }
+//     });
+    
+//     return NextResponse.json(updated);
+//   } catch (error) {
+//     return NextResponse.json({ error: "Failed to update category" }, { status: 500 });
+//   }
+// }
+
+// Update category name
 export async function PUT(
   req: NextRequest, 
   { params }: { params: Promise<{ categoryName: string }> }
@@ -66,16 +91,20 @@ export async function PUT(
     }
     
     const { categoryName } = await params;
-    const oldName = decodeURIComponent(categoryName);
     const { name } = await req.json();
     
+    // Decode the category name from URL
+    const decodedName = decodeURIComponent(categoryName);
+    
+    // Update using the category name as the identifier
     const updated = await prisma.category.update({
-      where: { id: Number(categoryName) },
+      where: { name: decodedName },
       data: { name }
     });
     
     return NextResponse.json(updated);
   } catch (error) {
+    console.error("Category update error:", error);
     return NextResponse.json({ error: "Failed to update category" }, { status: 500 });
   }
 }
