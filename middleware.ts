@@ -59,7 +59,8 @@ const isPublicRoute = createRouteMatcher([
   "/api/machines(.*)",    // machines API
   "/api/users/active",    // active users count
   "/api/slides(.*)",
-  "/api/testimonials(.*)"
+  "/api/testimonials(.*)",
+  "/contact(.*)"
 ]);
 
 // Protected routes (require authentication)
