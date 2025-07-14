@@ -7,9 +7,9 @@ import { prisma } from "@/lib/prisma";
 // PUT - Approve/Disapprove a comment
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Record<string, string | string[]> }
+ { params }: { params: { id: string } } // Explicitly define id parameter
 ) {
-    const id = Array.isArray(params.id) ? params.id[0] : params.id;
+     const id = params.id; // Directly access id without array check
   
   // Validate ID
   if (!id || isNaN(parseInt(id))) {
@@ -102,8 +102,16 @@ export async function PUT(
 // DELETE - Delete a comment
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Record<string, string | string[]> } // Updated type
+ { params }: { params: { id: string } } // Explicitly define id parameter
 ) {
+   const id = params.id; // Directly access id without array check
+   // Validate ID
+  if (!id || isNaN(parseInt(id))) {
+    return NextResponse.json(
+      { error: "Invalid comment ID" },
+      { status: 400 }
+    );
+  }
   try {
     const { userId } = await auth();
     
