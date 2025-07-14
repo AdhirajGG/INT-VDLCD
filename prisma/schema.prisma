@@ -201,3 +201,31 @@ model ContactSubmission {
   message     String
   createdAt   DateTime @default(now())
 }
+
+model User {
+  id           String   @id @default(cuid())
+  clerkUserId  String   @unique
+  email        String   @unique
+  firstName    String?
+  lastName     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relation to activity
+  activity     UserActivity?
+
+  @@map("users")
+}
+
+model UserActivity {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  lastActiveAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relation to user
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_activities")
+}

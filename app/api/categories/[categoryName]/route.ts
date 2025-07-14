@@ -4,22 +4,6 @@ import prisma from "@/lib/prisma";
 import { isAdmin } from "@/lib/clerkAdmin";
 
 // Update category name
-// export async function PUT(req: NextRequest, { params }: { params: { categoryName: string } }) {
-//   const { name } = await req.json();
-//   const oldName = decodeURIComponent(params.categoryName);
-
-//   if (!name) return NextResponse.json({ error: "Name required" }, { status: 400 });
-
-//   try {
-//     const updated = await prisma.category.updateMany({
-//       where: { name: oldName },
-//       data: { name },
-//     });
-//     return NextResponse.json({ success: true, updated });
-//   } catch (e) {
-//     return NextResponse.json({ error: "Update failed" }, { status: 500 });
-//   }
-// }
 
 export async function PUT(req: NextRequest, { params }: { params: { categoryName: string } }) {
   try {

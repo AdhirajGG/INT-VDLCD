@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 // PUT - Approve/Disapprove a comment
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Record<string, string | string[]> }
 ) {
   try {
     const { userId } = await auth();
@@ -30,11 +30,11 @@ export async function PUT(
       );
     }
 
-    const { id } = params;
+    const id = Array.isArray(params.id) ? params.id[0] : params.id;
     const { isApproved } = await request.json();
 
     const comment = await prisma.comment.update({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(id) }, // Use extracted id
       data: { isApproved },
       include: {
         post: {
@@ -93,7 +93,7 @@ export async function PUT(
 // DELETE - Delete a comment
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Record<string, string | string[]> } // Updated type
 ) {
   try {
     const { userId } = await auth();
@@ -116,10 +116,10 @@ export async function DELETE(
       );
     }
 
-    const { id } = params;
+    const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
     await prisma.comment.delete({
-      where: { id: parseInt(id) }
+      where: { id: parseInt(id) },
     });
 
     return NextResponse.json({ message: "Comment deleted successfully" });

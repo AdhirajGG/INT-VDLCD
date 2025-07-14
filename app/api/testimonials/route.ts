@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(testimonial);
   } catch (error) {
     console.error("Failed to add testimonial:", error);
-    return NextResponse.json(
+    return NextResponse.json( 
       { error: "Failed to add testimonial" },
       { status: 500 }
     );
