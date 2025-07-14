@@ -9,6 +9,15 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: Record<string, string | string[]> }
 ) {
+    const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  
+  // Validate ID
+  if (!id || isNaN(parseInt(id))) {
+    return NextResponse.json(
+      { error: "Invalid comment ID" },
+      { status: 400 }
+    );
+  }
   try {
     const { userId } = await auth();
     

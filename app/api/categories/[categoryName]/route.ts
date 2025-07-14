@@ -5,7 +5,11 @@ import { isAdmin } from "@/lib/clerkAdmin";
 
 // Update category name
 
-export async function PUT(req: NextRequest, { params }: { params: { categoryName: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Record<string, string | string[]> }) {
+   const categoryName = Array.isArray(params.categoryName) 
+    ? params.categoryName[0] 
+    : params.categoryName;
+  const oldName = decodeURIComponent(categoryName);
   try {
     if (!(await isAdmin())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     
@@ -23,8 +27,11 @@ export async function PUT(req: NextRequest, { params }: { params: { categoryName
 
 // Delete category and all machines in this category
 // Can give Error in production
-export async function DELETE(req: NextRequest, { params }: { params: { categoryName: string } }) {
-  const oldName = decodeURIComponent(params.categoryName);
+export async function DELETE(req: NextRequest,{ params }: { params: Record<string, string | string[]> }) {
+  const categoryName = Array.isArray(params.categoryName) 
+    ? params.categoryName[0] 
+    : params.categoryName;
+  const oldName = decodeURIComponent(categoryName);
 
   try {
     // Delete all machines in this category first

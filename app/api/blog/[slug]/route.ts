@@ -7,11 +7,13 @@ const prisma = new PrismaClient();
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Record<string, string | string[]> }
 ) {
+  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
   try {
+    const slugParam = Array.isArray(params.slug) ? params.slug[0] : params.slug;
     const post = await prisma.blogPost.findUnique({
-      where: { slug: params.slug }
+      where: { slug: slugParam }
     });
 
     if (!post) {
@@ -33,7 +35,7 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Record<string, string | string[]> }
 ) {
   try {
     if (!(await isAdmin())) {
@@ -56,8 +58,10 @@ export async function PUT(
       }
     }
 
+    const slugParam = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+
     const updatedPost = await prisma.blogPost.update({
-      where: { slug: params.slug },
+      where: { slug: slugParam },
       data: {
         title,
         slug,
@@ -81,15 +85,17 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Record<string, string | string[]> }
 ) {
   try {
     if (!(await isAdmin())) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const slugParam = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+
     await prisma.blogPost.delete({
-      where: { slug: params.slug }
+      where: { slug: slugParam }
     });
 
     return NextResponse.json({ success: true });
